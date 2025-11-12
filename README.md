@@ -1,8 +1,8 @@
-# Next.js Multi-tenant Starter Template
+# Next.js Multi-tenant Document Generation Platform
 
-A minimalistic multi-tenant Next.js starter template with minimal setup and a modular design. Bring your own backend and database.
+A minimalistic multi-tenant Next.js starter template with AWS Cognito authentication and S3 integration for document storage.
 
-[Demo](https://stack-template.vercel.app/)
+> **Note**: This project has been migrated from Stack Auth to AWS Cognito. See [COGNITO_MIGRATION.md](./COGNITO_MIGRATION.md) for detailed migration guide.
 
 ## Landing Page
 
@@ -42,11 +42,22 @@ A minimalistic multi-tenant Next.js starter template with minimal setup and a mo
     npm install
     ```
 
-3. Register an account on [Stack Auth](https://stack-auth.com), copy the keys from the dashboard, and paste them into the `.env.local` file. Then, enable "client team creation" on the team settings tab.
+3. Set up AWS Cognito and S3
 
-    If you want to learn more about Stack Auth or self-host it, check out the [Docs](https://docs.stack-auth.com) and [GitHub](https://github.com/stack-auth/stack).
+    Follow the detailed setup guide in [COGNITO_MIGRATION.md](./COGNITO_MIGRATION.md) to:
+    - Create AWS Cognito User Pool
+    - Create AWS Cognito Identity Pool  
+    - Set up S3 bucket for file storage
+    - Configure IAM roles
+    - Set environment variables
 
-4. Start the development server and go to [http://localhost:3000](http://localhost:3000)
+4. Copy `.env.local.example` to `.env.local` and fill in your AWS credentials
+
+    ```bash
+    cp .env.local.example .env.local
+    ```
+
+5. Start the development server and go to [http://localhost:3000](http://localhost:3000)
 
     ```bash
     npm run dev 
@@ -57,9 +68,11 @@ A minimalistic multi-tenant Next.js starter template with minimal setup and a mo
 - Next.js 14 app router
 - TypeScript
 - Tailwind & Shadcn UI
-- Stack Auth
-- Multi-tenancy (teams/orgs)
+- AWS Cognito authentication
+- AWS S3 for file storage
+- Multi-tenancy via Cognito Groups (teams/orgs)
 - Dark mode
+- AWS Amplify integration
 
 ## Inspired by
 

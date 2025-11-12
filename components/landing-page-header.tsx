@@ -1,7 +1,6 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { useStackApp, useUser } from "@stackframe/stack";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
@@ -9,6 +8,7 @@ import * as React from "react";
 import { ColorModeSwitcher } from "./color-mode-switcher";
 import { Logo } from "./logo";
 import { Button, buttonVariants } from "./ui/button";
+import { useAuthenticator } from '@aws-amplify/ui-react';
 
 interface NavProps {
   items?: {
@@ -20,18 +20,17 @@ interface NavProps {
 }
 
 function SignInSignUpButtons() {
-  const app = useStackApp();
   return (
     <>
       <Link
-        href={app.urls.signIn}
+        href="/auth/signin"
         className={buttonVariants({ variant: "secondary" })}
       >
         Sign In
       </Link>
 
       <Link
-        href={app.urls.signUp}
+        href="/auth/signup"
         className={buttonVariants({ variant: "default" })}
       >
         Sign Up
@@ -41,7 +40,7 @@ function SignInSignUpButtons() {
 }
 
 function AuthButtonsInner() {
-  const user = useUser();
+  const { user } = useAuthenticator((context) => [context.user]);
 
   if (user) {
     return (

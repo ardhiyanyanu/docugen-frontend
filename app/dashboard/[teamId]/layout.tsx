@@ -1,9 +1,11 @@
 'use client';
 
 import SidebarLayout, { SidebarItem } from "@/components/sidebar-layout";
-import { SelectedTeamSwitcher, useUser } from "@stackframe/stack";
+import { useAuthenticator } from "@aws-amplify/ui-react";
 import { BadgePercent, BarChart4, Columns3, Globe, Locate, Settings2, ShoppingBag, ShoppingCart, Users } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
+import * as React from "react";
+import { getUserTeams } from "@/lib/auth";
 
 const navigationItems: SidebarItem[] = [
   {
@@ -76,26 +78,53 @@ const navigationItems: SidebarItem[] = [
 
 export default function Layout(props: { children: React.ReactNode }) {
   const params = useParams<{ teamId: string }>();
-  const user = useUser({ or: 'redirect' });
-  const team = user.useTeam(params.teamId);
+  const { user } = useAuthenticator((context: any) => [context.user]);
+  const [teams, setTeams] = React.useState<string[]>([]);
   const router = useRouter();
 
-  if (!team) {
+  React.useEffect(() => {
+    if (!user) {
+      router.push('/auth/signin');
+      return;
+    }
+    getUserTeams().then(setTeams);
+  }, [user, router]);
+
+  const currentTeam = params.teamId;
+
+  if (!user || teams.length === 0) {
+    return null;
+  }
+
+  if (!teams.includes(currentTeam)) {
     router.push('/dashboard');
     return null;
   }
 
+  const handleTeamChange = (teamId: string) => {
+    router.push(`/dashboard/${teamId}`);
+  };
+
   return (
     <SidebarLayout 
       items={navigationItems}
-      basePath={`/dashboard/${team.id}`}
-      sidebarTop={<SelectedTeamSwitcher 
-        selectedTeam={team}
-        urlMap={(team) => `/dashboard/${team.id}`}
-      />}
+      basePath={`/dashboard/${currentTeam}`}
+      sidebarTop={
+        <div className="p-3">
+          <select 
+            value={currentTeam}
+            onChange={(e) => handleTeamChange(e.target.value)}
+            className="w-full px-3 py-2 border rounded-md bg-background"
+          >
+            {teams.map((team) => (
+              <option key={team} value={team}>{team}</option>
+            ))}
+          </select>
+        </div>
+      }
       baseBreadcrumb={[{
-        title: team.displayName,
-        href: `/dashboard/${team.id}`,
+        title: currentTeam,
+        href: `/dashboard/${currentTeam}`,
       }]}
     >
       {props.children}
