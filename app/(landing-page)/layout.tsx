@@ -8,17 +8,16 @@ export default function Layout(props: { children: React.ReactNode }) {
         items={[
           { title: "Home", href: "/" },
           { title: "Features", href: "/#features" },
-          { title: "Pricing", href: "/#pricing" },
-          { title: "Github", href: "https://github.com/stack-auth/stack-template", external: true },
+          { title: "Github", href: "https://github.com/ardhiyanyanu/docugen", external: true },
         ]}
       />
       <main className="flex-1">{props.children}</main>
       <Footer
-        builtBy="Stack Auth"
-        builtByLink="https://stack-auth.com/"
-        githubLink="https://github.com/stack-auth/stack-template"
-        twitterLink="https://twitter.com/stack_auth"
-        linkedinLink="linkedin.com/company/stack-auth"
+        builtBy="Ardhiyan Syahrullah"
+        builtByLink="https://ardhiyan.site/"
+        githubLink="https://github.com/ardhiyanyanu/docugen"
+        twitterLink="https://twitter.com/ardhiyanyanu"
+        linkedinLink="https://www.linkedin.com/in/ardhiyanyanu/"
       />
     </div>
   );

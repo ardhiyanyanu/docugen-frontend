@@ -40,7 +40,16 @@ function SignInSignUpButtons() {
 }
 
 function AuthButtonsInner() {
+  const [mounted, setMounted] = React.useState(false);
   const { user } = useAuthenticator((context) => [context.user]);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return <SignInSignUpButtons />;
+  }
 
   if (user) {
     return (

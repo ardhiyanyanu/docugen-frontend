@@ -14,7 +14,7 @@ export interface CognitoUser {
 export async function getAuthenticatedUser(): Promise<CognitoUser | null> {
   try {
     const user = await getCurrentUser();
-    const session = await fetchAuthSession();
+    const session = await fetchAuthSession({ forceRefresh: false });
     
     const groups = session.tokens?.accessToken?.payload['cognito:groups'] as string[] || [];
     const email = session.tokens?.idToken?.payload.email as string;
@@ -71,4 +71,17 @@ export async function isUserInGroup(groupName: string): Promise<boolean> {
 export async function getUserTeams(): Promise<string[]> {
   const user = await getAuthenticatedUser();
   return user?.groups || [];
+}
+
+/**
+ * Get AWS credentials from Identity Pool (for S3 access)
+ */
+export async function getAwsCredentials() {
+  try {
+    const session = await fetchAuthSession();
+    return session.credentials;
+  } catch (error) {
+    console.error('Error getting AWS credentials:', error);
+    return null;
+  }
 }

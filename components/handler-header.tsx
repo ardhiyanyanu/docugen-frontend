@@ -7,10 +7,16 @@ import { Avatar, AvatarFallback } from "./ui/avatar";
 import { Button } from "./ui/button";
 import { signOut } from "@/lib/auth";
 import { Moon, Sun, LogOut } from "lucide-react";
+import * as React from "react";
 
 export default function HandlerHeader() {
+  const [mounted, setMounted] = React.useState(false);
   const { user } = useAuthenticator((context: any) => [context.user]);
   const { theme, setTheme } = useTheme();
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleSignOut = async () => {
     await signOut();
@@ -25,7 +31,7 @@ export default function HandlerHeader() {
   return (
     <>
       <header className="fixed w-full z-50 p-4 h-14 flex items-center py-4 border-b justify-between bg-background">
-        <Logo link={user ? "/dashboard" : "/"}/>
+        <Logo link={mounted && user ? "/dashboard" : "/"}/>
 
         <div className="flex items-center justify-end gap-3">
           <Button
@@ -36,7 +42,7 @@ export default function HandlerHeader() {
             {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
           </Button>
           
-          {user && (
+          {mounted && user && (
             <>
               <Avatar>
                 <AvatarFallback>{getInitials(user.signInDetails?.loginId)}</AvatarFallback>

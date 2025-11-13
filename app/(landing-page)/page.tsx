@@ -1,7 +1,6 @@
 import { FeatureGrid } from "@/components/features";
 import { Hero } from "@/components/hero";
-import { PricingGrid } from "@/components/pricing";
-import { GitHubLogoIcon } from "@radix-ui/react-icons";
+import { FileTextIcon } from "@radix-ui/react-icons";
 import { ComponentIcon, Users } from "lucide-react";
 
 export default async function IndexPage() {
@@ -9,26 +8,13 @@ export default async function IndexPage() {
     <>
       <Hero
         capsuleText="100% Open-source & Free"
-        capsuleLink="https://stacktemplate.com"
-        title="A Multi-tenant Next.js Starter Template"
-        subtitle="Built for developers, by developers. Next.js + Shadcn UI + AWS Cognito."
+        capsuleLink="https://github.com/ardhiyanyanu/docugen"
+        title="Automatic Multiple Document Generator"
+        subtitle="multiple data source, multiple template format, multiple file results."
         primaryCtaText="Get Started"
         primaryCtaLink="/auth/signup"
         secondaryCtaText="GitHub"
-        secondaryCtaLink="https://github.com/stack-auth/stack-template"
-        credits={
-          <>
-            Crafted with ❤️ by{" "}
-            <a
-              href="https://stack-auth.com"
-              target="_blank"
-              rel="noreferrer"
-              className="underline"
-            >
-              Stack Auth
-            </a>
-          </>
-        }
+        secondaryCtaLink="https://github.com/ardhiyanyanu/docugen"
       />
 
       <div id="features" />
@@ -36,6 +22,21 @@ export default async function IndexPage() {
         title="Features"
         subtitle="Unlock powerful capabilities for your project."
         items={[
+          {
+            icon: <Users className="h-12 w-12" />,
+            title: "Multi-tenancy",
+            description: "Secured multi-tenancy.",
+          },
+          {
+            icon: <FileTextIcon className="h-12 w-12" />,
+            title: "Multiple Data File",
+            description: "We can get data from google sheet, direct database, also from REST API.",
+          },
+          {
+            icon: <FileTextIcon className="h-12 w-12" />,
+            title: "Multiple Template File Format",
+            description: "You can use .rtf, .odf, html, or google docs.",
+          },
           {
             icon: (
               <svg viewBox="0 0 24 24" className="h-12 w-12 fill-current">
@@ -98,72 +99,6 @@ export default async function IndexPage() {
             title: "AWS Cognito",
             description:
               "Comprehensive Authentication: OAuth, User Management, and more.",
-          },
-          {
-            icon: <Users className="h-12 w-12" />,
-            title: "Multi-tenancy & RBAC",
-            description: "Built-in Teams and Permissions.",
-          },
-          {
-            icon: <GitHubLogoIcon className="h-12 w-12" />,
-            title: "100% Open-source",
-            description: "Open-source and self-hostable codebase.",
-          },
-          {
-            icon: <ComponentIcon className="h-12 w-12" />,
-            title: "Modular Design",
-            description: "Easily extend and customize. No spaghetti code.",
-          },
-        ]}
-      />
-
-      <div id="pricing" />
-      <PricingGrid
-        title="Pricing"
-        subtitle="Flexible plans for every team."
-        items={[
-          {
-            title: "Basic",
-            price: "Free",
-            description: "For individuals and small projects.",
-            features: [
-              "Full source code",
-              "100% Open-source",
-              "Community support",
-              "Free forever",
-              "No credit card required",
-            ],
-            buttonText: "Get Started",
-            buttonHref: "/auth/signup",
-          },
-          {
-            title: "Pro",
-            price: "$0.00",
-            description: "Ideal for growing teams and businesses.",
-            features: [
-              "Full source code",
-              "100% Open-source",
-              "Community support",
-              "Free forever",
-              "No credit card required",
-            ],
-            buttonText: "Upgrade to Pro",
-            isPopular: true,
-            buttonHref: "/auth/signup",
-          },
-          {
-            title: "Enterprise",
-            price: "Still Free",
-            description: "For large organizations.",
-            features: [
-              "Full source code",
-              "100% Open-source",
-              "Community support",
-              "Free forever",
-              "No credit card required",
-            ],
-            buttonText: "Contact Us",
-            buttonHref: "/auth/signup",
           },
         ]}
       />
